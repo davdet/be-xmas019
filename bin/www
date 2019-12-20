@@ -1,0 +1,90 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+const app = require('../app'); //Utilizza l'applicazione express definita in app.js
+const debug = require('debug')('studenti-be:server'); //Utilizza le funzionalità di debug stabilendo info sul debug
+const http = require('http'); //Utilizza il modulo realtivo alla comunicazione HTTP
+
+/**
+ * Get port from environment and store in Express.
+ */
+const port = normalizePort(process.env.PORT || '3000'); //Permette di utilizzare la porta 3000 in caso non sia impostata quella di default.
+                                                        //ATTENZIONE: In alcuni ambienti è impostata a livello di sistema e non può essere modificata (controlliamo sempre su che porta lavora il server)  
+app.set('port', port); //Viene settata la porta di comunicazione nella nostra app
+
+/**
+ * Create HTTP server.
+ */
+const server = http.createServer(app); //Viene creato il nostro server legato all'app che express instanziata
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+server.listen(port); //Setta la porta di ascolto del server
+server.on('error', onError); //In caso di evento di errore viene avviata la dunzione 'onError'
+server.on('listening', onListening); //In caso di evento di listening viene avviata la dunzione 'onListening'
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+//Permette di normalizzare la porta in virtù del fatto che su alcuni ambienti viene tratta come stringa, in altri come numero
+function normalizePort(val) {
+  const port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+//Questa funzione viene invocata in caso di errore del funzionamento del server
+function onError(error) {
+  //Vado a identificare l'errore generato, se esso non è di tipo 'listen' lancio un eccezione
+  if (error.syscall !== 'listen') {
+    throw error; //ATTENZIONE: se viene lanciata un eccezione l'esecuzione si interrompe e il controllo viene passato al catch del livello superiore. Se non viene gestita il programma termina.
+  }
+
+  //Assegna a bind il numero della porta (vedi caso simile: stringa su linux)
+  const bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  //Vengono gestiti gli errori con i relativi messaggi in base all'errore
+  switch (error.code) {
+    case 'EACCES': //Problema di permessi
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE': //Indirizzo della porta già in uso
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  const addr = server.address();
+  const bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  console.log('Listening on ' + bind);
+}
