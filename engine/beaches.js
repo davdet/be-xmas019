@@ -17,11 +17,11 @@ const getBeaches = async (req, res) => { //Async ci permette di gestire in modo 
 };
 
 const getBeachById = async (req, res) => {
-  const beachId = req.params.id; //Recupero l'id passato come parametro
+  const beachId = req.params.idBeach; //Recupero l'id passato come parametro
   let beach;
 
   try {
-    beach = await Beaches.findOne({where: {id: beachId}});
+    beach = await Beaches.findOne({where: {idBeach: beachId}});
   } catch (error) {
     return res.status(500).send(error);
   }
@@ -51,12 +51,12 @@ const createBeach = async (req, res) => {
 };
 
 const editBeach = async (req, res) => {
-  const beachId = req.params.id;
+  const beachId = req.params.idBeach;
   const beach = req.body;
   let beachFound, updated;
 
   try {
-    beachFound = await Beaches.findOne({where: {id: beachId}});
+    beachFound = await Beaches.findOne({where: {idBeach: beachId}});
 
     if (!beachFound) {
       return res.status(404).send({
@@ -66,7 +66,7 @@ const editBeach = async (req, res) => {
       })
     }
 
-    updated = await Beaches.update({...beach}, {where: {id: beachId}});
+    updated = await Beaches.update({...beach}, {where: {idBeach: beachId}});
 
   } catch (error) {
     return res.status(500).send(error);
@@ -87,11 +87,11 @@ const editBeach = async (req, res) => {
 };
 
 const deleteBeach = async (req, res) => {
-  const beachId = req.params.id;
+  const beachId = req.params.idBeach;
   let response;
 
   try {
-    response = await Beaches.destroy({where: {id: beachId}});
+    response = await Beaches.destroy({where: {idBeach: beachId}});
   } catch (error) {
     return res.status(500).send(error);
   }
