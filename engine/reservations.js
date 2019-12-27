@@ -18,7 +18,7 @@ const getReservationByEmail = async (req, res) => {
   let reservation;
 
   try {
-    reservation = await Reservation.findOne({where: {email: emailReservation}});
+    reservation = await Reservations.findOne({where: {email: emailReservation}});
   } catch (error) {
     return res.status(500).send(error);
   }
@@ -39,7 +39,7 @@ const addReservation = async (req, res) => {
   let reservation;
   
   try {
-    reservation = await Reservation.create({...bodyReservation});
+    reservation = await Reservations.create({...bodyReservation});
   } catch (error) {
     console.log(error);
     return res.status(500).send(error);
