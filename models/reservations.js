@@ -9,7 +9,7 @@ module.exports = (sequelize, DataType) => {
       autoIncrement: true // Automatically gets converted to SERIAL for postgres
     },
     idBeach:          DataType.INTEGER(11),
-    data:             DataType.DATEONLY,
+    date:             DataType.DATEONLY,
     name_reservation: DataType.STRING(50),
     email:            DataType.STRING(30),
     mobile:           DataType.STRING(16),

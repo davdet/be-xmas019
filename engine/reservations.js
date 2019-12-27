@@ -37,18 +37,19 @@ const getReservationByEmail = async (req, res) => {
 const addReservation = async (req, res) => {
   const bodyReservation = req.body;
   let reservation;
-
+  
   try {
     reservation = await Reservation.create({...bodyReservation});
   } catch (error) {
+    console.log(error);
     return res.status(500).send(error);
   }
-
+  console.log(reservation);
   return res.status(201).send(reservation);
 };
 
 const editReservation = async (req, res) => {
-  const emailReservation = req.params.email;
+  const emailReservation = req.params.email;    //rimettere idReservation al posto di email
   const reservation = req.body;
   let reservationFound, updated;
 
@@ -84,7 +85,7 @@ const editReservation = async (req, res) => {
 };
 
 const deleteReservation = async (req, res) => {
-  const emailReservation = req.params.email;
+  const emailReservation = req.params.email;      //rimettere idReservation al posto di email
   let response;
 
   try {

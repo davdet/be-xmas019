@@ -3,7 +3,6 @@
 //Gestisco il modello della rappresentazione dei dati in relazione al database, potrei ottenere questo schema in automatico con componenti aggiuntivi o scriverlo da zero in base alla struttura del database
 module.exports = (sequelize, DataType) => {
   let Beaches = sequelize.define('Beaches', {
-    // idBeach missing because Sequelize adds it by default
     idBeach: {
       type: DataType.INTEGER(11),
       primaryKey: true,

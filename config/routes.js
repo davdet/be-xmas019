@@ -22,7 +22,7 @@ module.exports = (app) => { //Ricevo in ingresso il parametro app che poi esport
   app.post(reservationsPath, ReservationsEngine.addReservation);
 
   app.get(`${reservationsPath}/:email`, ReservationsEngine.getReservationByEmail); //Quando trovo :email mi riferisco al fatto che verrà passato un valore dinamico che utilizzerò come parametro
-  app.put(`${reservationsPath}/:email`, ReservationsEngine.editReservation);
+  app.put(`${reservationsPath}/:email`, ReservationsEngine.editReservation);    //modificare con id 
   app.delete(`${reservationsPath}/:email`, ReservationsEngine.deleteReservation);
 
   /********** TRAFFIC REST APIs **********/
