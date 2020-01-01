@@ -12,7 +12,7 @@ const getReservations = async (req, res) => {
 
   return res.status(200).send(reservations); //Se tutto è andato a buon fine incorporo nella risposta le spiagge e la invio al client
 };
-
+/*
 const getReservationByEmail = async (req, res) => {
   const emailReservation = req.params.email; //Recupero l'email passata come parametro
   let reservation;
@@ -32,6 +32,20 @@ const getReservationByEmail = async (req, res) => {
   }
   //In caso contrario restituisco la prenotazione
   return res.status(200).send(reservation);
+};*/
+
+const getReservationsByDate = async (req, res) => {
+  const reservationsDate = req.params.date;
+  let reservations;
+  
+  try {
+    reservations = await Reservations.findAll({where: {date: reservationsDate}});
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error);
+  }
+  console.log(reservations);
+  return res.status(201).send(reservations);
 };
 
 const addReservation = async (req, res) => {
@@ -100,8 +114,9 @@ const deleteReservation = async (req, res) => {
 //Espongo tutte le funzionalità che voglio rendere utilizzabili dal mio sistema 
 module.exports = {
   getReservations,
-  getReservationByEmail,
+  //getReservationByEmail,
   editReservation,
   deleteReservation,
-  addReservation
+  addReservation,
+  getReservationsByDate
 };
