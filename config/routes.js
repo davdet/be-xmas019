@@ -21,11 +21,11 @@ module.exports = (app) => { //Ricevo in ingresso il parametro app che poi esport
   app.get(reservationsPath, ReservationsEngine.getReservations); //Se la chiamata è relativa al path /reservations invoca la funzione 'getReservations' del file 'reservations.js' in 'Engine'
   app.post(reservationsPath, ReservationsEngine.addReservation);
 
-  app.get(`${reservationsPath}/:date`, ReservationsEngine.getReservationsByDate);
-  //app.get(`${reservationsPath}/:email`, ReservationsEngine.getReservationByEmail); //Quando trovo :email mi riferisco al fatto che verrà passato un valore dinamico che utilizzerò come parametro
+  app.get(`${reservationsPath}/byMail/:email`, ReservationsEngine.getReservationByEmail); //Quando trovo :email mi riferisco al fatto che verrà passato un valore dinamico che utilizzerò come parametro
+  app.get(`${reservationsPath}/byId/:idReservation`, ReservationsEngine.getReservationById);
   app.put(`${reservationsPath}/:email`, ReservationsEngine.editReservation);    //modificare con id 
   app.delete(`${reservationsPath}/:email`, ReservationsEngine.deleteReservation);
-
+  
   /********** TRAFFIC REST APIs **********/
   app.get(`${trafficPath}/:city`, TrafficEngine.getTrafficByCity);
 
