@@ -25,6 +25,7 @@ module.exports = (app) => { //Ricevo in ingresso il parametro app che poi esport
   app.get(`${reservationsPath}/byId/:idReservation`, ReservationsEngine.getReservationById);
   app.put(`${reservationsPath}/:idReservation`, ReservationsEngine.editReservation);   
   app.delete(`${reservationsPath}/:email`, ReservationsEngine.deleteReservation);
+  app.delete(`${reservationsPath}/id/:idReservation`, ReservationsEngine.deleteReservationById);
   
   /********** TRAFFIC REST APIs **********/
   app.get(`${trafficPath}/:city`, TrafficEngine.getTrafficByCity);

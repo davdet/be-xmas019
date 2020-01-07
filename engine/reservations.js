@@ -118,6 +118,19 @@ const deleteReservation = async (req, res) => {
   return res.status(204).send({}); //204 codice di stato http: il server ha processato con successo la richiesta e non restituirà nessun contenuto.
 };
 
+const deleteReservationById = async (req, res) => {
+  const reservationId = req.params.idReservation;      //rimettere idReservation al posto di email
+  let response;
+
+  try {
+    response = await Reservations.destroy({where: {idReservation: reservationId}});
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+
+  return res.status(204).send({}); //204 codice di stato http: il server ha processato con successo la richiesta e non restituirà nessun contenuto.
+};
+
 //Espongo tutte le funzionalità che voglio rendere utilizzabili dal mio sistema 
 module.exports = {
   getReservations,
@@ -125,5 +138,6 @@ module.exports = {
   getReservationById,
   editReservation,
   deleteReservation,
-  addReservation
+  addReservation,
+  deleteReservationById
 };
