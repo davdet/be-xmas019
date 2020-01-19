@@ -13,6 +13,21 @@ const getReservations = async (req, res) => {
   return res.status(200).send(reservations); //Se tutto è andato a buon fine incorporo nella risposta le spiagge e la invio al client
 };
 
+const getReservationsByEmail = async (req, res) => {
+  const emailReservation = req.params.email; //Recupero l'email passata come parametro
+  let reservations;
+
+  try {
+    reservations = await Reservations.findAll({where: {email: emailReservation}});
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+
+  //In caso contrario restituisco la prenotazione
+  return res.status(200).send(reservations);
+};
+
+/*
 const getReservationByEmail = async (req, res) => {
   const emailReservation = req.params.email; //Recupero l'email passata come parametro
   let reservation;
@@ -32,7 +47,7 @@ const getReservationByEmail = async (req, res) => {
   }
   //In caso contrario restituisco la prenotazione
   return res.status(200).send(reservation);
-};
+};*/
 
 const getReservationById = async (req, res) => {
   const reservationId = req.params.idReservation; //Recupero l'email passata come parametro
@@ -105,6 +120,7 @@ const editReservation = async (req, res) => {
     });
 };
 
+/*
 const deleteReservation = async (req, res) => {
   const emailReservation = req.params.email;      //rimettere idReservation al posto di email
   let response;
@@ -116,10 +132,10 @@ const deleteReservation = async (req, res) => {
   }
 
   return res.status(204).send({}); //204 codice di stato http: il server ha processato con successo la richiesta e non restituirà nessun contenuto.
-};
+};*/
 
 const deleteReservationById = async (req, res) => {
-  const reservationId = req.params.idReservation;      //rimettere idReservation al posto di email
+  const reservationId = req.params.idReservation;     
   let response;
 
   try {
@@ -134,10 +150,10 @@ const deleteReservationById = async (req, res) => {
 //Espongo tutte le funzionalità che voglio rendere utilizzabili dal mio sistema 
 module.exports = {
   getReservations,
-  getReservationByEmail,
+  getReservationsByEmail,
   getReservationById,
   editReservation,
-  deleteReservation,
+  //deleteReservation,
   addReservation,
   deleteReservationById
 };
